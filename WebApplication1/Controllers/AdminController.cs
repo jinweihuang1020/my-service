@@ -11,11 +11,11 @@ namespace WebApplication1.Controllers
     [ApiController]
     public class AdminController : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("UserList")]
         public IActionResult UserList()
         {
             return Ok(new string[2] { "u1", "u2" });
         }
-
+        
     }
 }
