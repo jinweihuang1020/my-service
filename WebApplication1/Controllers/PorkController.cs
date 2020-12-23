@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using WebApplication1.Model;
 
 namespace WebApplication1.Controllers
 {
@@ -15,33 +17,27 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            var ret = await GetPorkPriceToday();
-            return new string[] { ret };
+            var ret = await PorkModel.GetPorkPriceToday();
+            return new string[] { ret, Model.PorkModel.QueryNum + " 次", JsonConvert.SerializeObject(PorkModel.LeastSaleInfo) };
         }
 
-        public  async Task<string> GetPorkPriceToday()
+        // GET api/values/5
+        [HttpPost("SaleData")]
+        public ActionResult<string> SaleData([FromBody] PorkModel.SaleInfo Data)
         {
-            using (var client = new HttpClient())
+            try
             {
-                try
-                {
-                    var response = await client.GetAsync("https://agridata.coa.gov.tw/api/v1/PorkTransType/?MarketName=%E5%98%89%E7%BE%A9%E7%B8%A3");
-                    bool isResponse = response.IsSuccessStatusCode;
-                    if (isResponse)
-                    {
-                        return await response.Content.ReadAsStringAsync();
-                    }
-                    else
-                        return "Fail";
-                }
-                catch (Exception ex)
-                {
-                    //EventLog(ex.Message);
-                    Console.WriteLine(ex.Message);
-                    return ex.Message;
-                }
+                PorkModel.LeastSaleInfo = Data;
             }
+            catch (Exception ex)
+            {
+                return NoContent();
+            }
+            return Ok("Done");
         }
+
+        #region 範例
+
 
         // GET api/values/5
         [HttpGet("{id}")]
@@ -67,5 +63,6 @@ namespace WebApplication1.Controllers
         public void Delete(int id)
         {
         }
+        #endregion
     }
 }

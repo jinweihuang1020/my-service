@@ -19,6 +19,9 @@ namespace WebApplication1
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+               .UseUrls("http://localhost:8080"); //本地
+                                           //
+                                           //.UseUrls("http://192.168.0.100:6050");;
     }
 }
