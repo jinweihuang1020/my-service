@@ -19,6 +19,9 @@ namespace WebApplication1.Model
             public int DeviceReplyOKNumber { get; set; } = -1;
             public int ErrorCode { get; set; } = -1;
             public int MeasureTime { get; set; } = -1;
+            public double[] XAxisRawData { get; set; }
+            public double[] YAxisRawData { get; set; }
+            public double[] ZAxisRawData { get; set; }
         }
     }
 }
