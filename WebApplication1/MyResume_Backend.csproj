@@ -5,6 +5,8 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <UserSecretsId>7a4cc055-c95c-445b-9644-cb498d23c5a7</UserSecretsId>
 	<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+	<AssemblyName>MyResume_Backend</AssemblyName>
+	<RootNamespace>MyResume_Backend</RootNamespace>
 	
   </PropertyGroup>
 
