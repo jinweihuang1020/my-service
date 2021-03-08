@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.3c61c360ae25b0a2042e75d289a9694e.js"
+  "/precache-manifest.cd2b4cde7c1c985c80f22d00b7f16e16.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "gin_wei_reume"});
