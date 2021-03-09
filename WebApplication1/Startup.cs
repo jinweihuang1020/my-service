@@ -61,7 +61,16 @@ namespace WebApplication1
                 app.UseHsts();
             }
 
-            MyResume_Backend.Model.Utility.WSHandler.Start();
+            try
+            {
+                Console.WriteLine("Start websocket server !");
+                MyResume_Backend.Model.Utility.WSHandler.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Websocket server build fail!"+ex.Message);
+            }
+           
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());//允許CORS跨域請求
             app.UseDefaultFiles();

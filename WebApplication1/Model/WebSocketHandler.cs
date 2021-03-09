@@ -20,7 +20,7 @@ namespace MyResume_Backend.Model
         public WebSocketHandler(string localIP = "localhost")
         {
             this.localIP = localIP;
-            server = new WebSocketServer(44332);
+            server = new WebSocketServer();
             server.AddWebSocketService<Echo>("/Test");
         }
 
