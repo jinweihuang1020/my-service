@@ -60,6 +60,9 @@ namespace WebApplication1
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            MyResume_Backend.Model.Utility.WSHandler.Start();
+
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());//允許CORS跨域請求
             app.UseDefaultFiles();
             app.UseStaticFiles();
