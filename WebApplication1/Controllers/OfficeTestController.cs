@@ -34,7 +34,7 @@ namespace WebApplication1.Controllers
             sw.Start();
             while (!ReplyFlag)
             {
-                if (sw.ElapsedMilliseconds > 10000)
+                if (sw.ElapsedMilliseconds > 20000)
                 {
                     return Ok("Timeout");
                 }
