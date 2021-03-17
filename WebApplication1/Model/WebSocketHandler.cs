@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using WebSocketSharp;
 using WebSocketSharp.Server;
@@ -20,7 +21,7 @@ namespace MyResume_Backend.Model
         public WebSocketHandler(string localIP = "localhost")
         {
             this.localIP = localIP;
-            server = new WebSocketServer();
+            server = new WebSocketServer(44332);
             server.AddWebSocketService<Echo>("/Test");
         }
 
@@ -45,7 +46,7 @@ namespace MyResume_Backend.Model
             msg_obj.nickname = senderid + "_nickname";
             msg_obj.message = msg;
             msg_obj.IsfromOthers = true;
-            msg_obj.time_stamp = DateTime.Now.Ticks+"";
+            msg_obj.time_stamp = DateTime.Now.Ticks + "";
 
             string msg_jsonStr = JsonConvert.SerializeObject(msg_obj);
 
@@ -78,13 +79,26 @@ namespace MyResume_Backend.Model
         protected override void OnMessage(MessageEventArgs e)
         {
             Console.WriteLine($"{Context.UserEndPoint}{e.Data}");
-            MessageObj revData = JsonConvert.DeserializeObject<MessageObj>(e.Data);
-            if (revData == null)
+            try
             {
-                Context.WebSocket.Send("FAIL");
-                return;
+                MessageObj revData = JsonConvert.DeserializeObject<MessageObj>(e.Data);
+                if (revData == null)
+                {
+                    Context.WebSocket.Send("FAIL,deserializeObject fail.");
+                    return;
+                }
+                Utility.WSHandler.SendConntInMsgTo(id, revData.message, revData.SendTo);
             }
-            Utility.WSHandler.SendConntInMsgTo(id, revData.message, revData.SendTo);
+            catch (JsonSerializationException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Context.WebSocket.Send("FAIL,should be JSON Format");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                Context.WebSocket.Send("FAIL," + ex.Message);
+            }
         }
         protected override void OnOpen()
         {
@@ -96,7 +110,7 @@ namespace MyResume_Backend.Model
                 userEndPoint = Context.UserEndPoint
             });
             id = Context.UserEndPoint.ToString();
-            Utility.WSHandler.SendConntInMsgTo(id,$"{Context.UserEndPoint} connect in ! welcome !", "ALL");
+            Utility.WSHandler.SendConntInMsgTo(id, $"{Context.UserEndPoint} connect in ! welcome !", "ALL");
         }
     }
 
