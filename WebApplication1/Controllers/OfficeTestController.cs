@@ -36,6 +36,9 @@ namespace WebApplication1.Controllers
             {
                 if (sw.ElapsedMilliseconds > 20000)
                 {
+
+                    ActiveFlag = false ;
+
                     return Ok("Timeout,今日已打卡完畢。^_^");
                 }
                 Thread.Sleep(1);
