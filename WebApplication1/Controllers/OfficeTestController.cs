@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -23,40 +24,49 @@ namespace WebApplication1.Controllers
             return Ok(JsonConvert.SerializeObject(OfficeTestModel.CurrentKXTestDATA));
         }
 
-        public static bool ReplyFlag = false;
-        public static bool ActiveFlag = false;
         [HttpGet("GetCheckIn")]
         public async Task<ActionResult> GetCheckIn()
         {
-            ReplyFlag = false;
-            ActiveFlag = true;
+            OfficeTestModel.CheckState.ReplyFlag = false;
+            OfficeTestModel.CheckState.ActiveFlag = true;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            while (!ReplyFlag)
+            while (!OfficeTestModel.CheckState.ReplyFlag)
             {
-                if (sw.ElapsedMilliseconds > 20000)
+                if (sw.ElapsedMilliseconds > 1000)
                 {
-                    return Ok("Timeout,今日已打卡完畢。^_^");
+                    return Ok("今日已打卡完畢!");
                 }
                 Thread.Sleep(1);
             }
-            return Ok("[End User] Check In Finish!");
+            return Ok("打卡成功");
         }
 
         [HttpGet("GetCheckInOK")]
         public async Task<ActionResult> GetCheckInOK()
         {
-            ReplyFlag = true;
-            ActiveFlag = false;
+            OfficeTestModel.CheckState.LastCheckTime = DateTime.Now.AddDays(1);
+            OfficeTestModel.CheckState.ReplyFlag = true;
+            OfficeTestModel.CheckState.ActiveFlag = false;
             return Ok("[office] Check In Finish!");
         }
+
         [HttpGet("GetActiveFlag")]
         public async Task<ActionResult> GetActiveFlag()
         {
-            return Ok(ActiveFlag);
+            OfficeTestModel.CheckState.LastAliveTime = DateTime.Now.AddDays(1);//美國比台灣晚一天時區
+            return Ok(OfficeTestModel.CheckState.ActiveFlag);
         }
 
-        // GET api/values/5
+
+        [HttpGet("GetCheckState")]
+        public async Task<ActionResult> GetCheckState()
+        {
+            return Ok(OfficeTestModel.CheckState);
+        }
+
+
+        //GET api/values/5
         [HttpPost("KxTestDataUpdate")]
         public ActionResult<string> SaleData([FromBody] OfficeTestModel.KxTestSta Data)
         {

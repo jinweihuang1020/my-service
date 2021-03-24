@@ -70,7 +70,9 @@ namespace WebApplication1
             {
                 Console.WriteLine("Websocket server build fail!"+ex.Message);
             }
-           
+
+
+            Model.OfficeTestModel.CheckState = new Model.OfficeTestModel.clsCheckState();
 
             app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());//允許CORS跨域請求
             app.UseDefaultFiles();
