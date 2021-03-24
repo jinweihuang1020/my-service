@@ -44,7 +44,7 @@ namespace WebApplication1.Controllers
         [HttpGet("GetCheckInOK")]
         public async Task<ActionResult> GetCheckInOK()
         {
-            OfficeTestModel.CheckState.LastCheckTime = DateTime.Now.AddDays(1);
+            OfficeTestModel.CheckState.LastCheckTime = DateTime.Now.AddHours(8);
             OfficeTestModel.CheckState.ReplyFlag = true;
             OfficeTestModel.CheckState.ActiveFlag = false;
             return Ok("[office] Check In Finish!");
@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
         [HttpGet("GetActiveFlag")]
         public async Task<ActionResult> GetActiveFlag()
         {
-            OfficeTestModel.CheckState.LastAliveTime = DateTime.Now.AddDays(1);//美國比台灣晚一天時區
+            OfficeTestModel.CheckState.LastAliveTime = DateTime.Now.AddHours(8);
             return Ok(OfficeTestModel.CheckState.ActiveFlag);
         }
 
@@ -68,7 +68,7 @@ namespace WebApplication1.Controllers
         [HttpGet("AutoRpFinish")]
         public async Task<ActionResult> AutoRpFinish()
         {
-            OfficeTestModel.HRPState.LastRpTime = DateTime.Now;
+            OfficeTestModel.HRPState.LastRpTime = DateTime.Now.AddHours(8); 
             return Ok("Ok");
         }
 
