@@ -65,6 +65,20 @@ namespace WebApplication1.Controllers
         }
 
 
+        [HttpGet("AutoRpFinish")]
+        public async Task<ActionResult> AutoRpFinish()
+        {
+            OfficeTestModel.HRPState.LastRpTime = DateTime.Now;
+            return Ok("Ok");
+        }
+
+        [HttpGet("GetHRPState")]
+        public async Task<ActionResult> GetHRPState()
+        {
+            return Ok(OfficeTestModel.HRPState);
+        }
+
+
         //GET api/values/5
         [HttpPost("KxTestDataUpdate")]
         public ActionResult<string> SaleData([FromBody] OfficeTestModel.KxTestSta Data)

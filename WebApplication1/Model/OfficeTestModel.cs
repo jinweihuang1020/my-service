@@ -10,6 +10,7 @@ namespace WebApplication1.Model
     public class OfficeTestModel
     {
         public static clsCheckState CheckState;
+        public static clsHRPState HRPState = new clsHRPState();
         public static string message;
         public static string HTMLRender
         {
@@ -49,6 +50,14 @@ namespace WebApplication1.Model
                     Thread.Sleep(1);
                 }
             }
+        }
+
+        /// <summary>
+        /// 報工時狀態
+        /// </summary>
+        public class clsHRPState
+        {
+            public DateTime LastRpTime = DateTime.MinValue;
         }
 
         public static KxTestSta CurrentKXTestDATA = new KxTestSta();
