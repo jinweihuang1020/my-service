@@ -35,7 +35,6 @@ namespace WebApplication1.Controllers
             {
                 if (sw.ElapsedMilliseconds > 1000)
                 {
-                    return Ok("今日已打卡完畢!");
                 }
                 Thread.Sleep(1);
             }
