@@ -7,6 +7,7 @@
 	<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
 	<AssemblyName>MyResume_Backend</AssemblyName>
 	<RootNamespace>MyResume_Backend</RootNamespace>
+	<SignAssembly>false</SignAssembly>
 	
   </PropertyGroup>
 
